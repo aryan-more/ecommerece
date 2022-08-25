@@ -6,8 +6,10 @@ class PageNotFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Error")),
-      body: Center(
+      appBar: AppBar(
+        title: const Text("Error"),
+      ),
+      body: const Center(
         child: Text("Something Went Wrong"),
       ),
     );

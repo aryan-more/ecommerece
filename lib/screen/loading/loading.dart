@@ -11,7 +11,7 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<UserProvider>(context).onBoot(context);
+    Provider.of<UserProvider>(context, listen: false).onBoot(context);
     AppTheme theme = Theme.of(context).theme;
     return Scaffold(
       body: Center(

@@ -2,11 +2,11 @@
 import 'dart:convert';
 
 class UserAccount {
-  final String name;
-  final String email;
-  final String phoneNumber;
+  String name;
+  String email;
+  String phoneNumber;
   final String token;
-  final List cart;
+  List cart;
 
   UserAccount({
     required this.token,
@@ -38,4 +38,46 @@ class UserAccount {
   }
 
   String toJson() => json.encode(toMap());
+
+  void applyUpdate(UpdatedUserAccount updatedUserAccount) {
+    name = updatedUserAccount.name;
+    email = updatedUserAccount.email;
+    phoneNumber = updatedUserAccount.phone;
+    cart = updatedUserAccount.cart;
+  }
+}
+
+class UpdatedUserAccount {
+  final String name;
+  final String email;
+  final String phone;
+  final List cart;
+  UpdatedUserAccount({
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.cart,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'cart': cart,
+    };
+  }
+
+  factory UpdatedUserAccount.fromMap(Map<String, dynamic> map) {
+    return UpdatedUserAccount(
+      name: map['name'] as String,
+      email: map['email'] as String,
+      phone: map['phone'] as String,
+      cart: List.from(map['cart'] as List),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UpdatedUserAccount.fromJson(String source) => UpdatedUserAccount.fromMap(json.decode(source) as Map<String, dynamic>);
 }

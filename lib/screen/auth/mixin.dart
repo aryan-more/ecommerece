@@ -8,10 +8,11 @@ import 'package:ecommerece/provider/user.dart';
 import 'package:ecommerece/screen/home/home.dart';
 import 'package:ecommerece/service/auth.dart';
 import 'package:ecommerece/widgets/dialog/loading.dart';
-import 'package:ecommerece/widgets/snackbar/error.dart';
+import 'package:ecommerece/widgets/snackbar/bars.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:provider/provider.dart';
 
 mixin LogInScreenMixin {
@@ -106,39 +107,46 @@ mixin LogInScreenMixin {
     required BuildContext context,
   }) async {
     if (formKey.currentState!.validate()) {
-      Loading.show(context: context);
-      http.Response response = await (isSignIn
-          ? signIn(
-              context: context,
-              contact: emailTextController.text,
-              password: passwordTextController.text,
-            )
-          : signUp(
-              context: context,
-              email: emailTextController.text,
-              password: passwordTextController.text,
-              username: usenameTextController.text,
-              phone: phoneTextController.text,
-            ));
-      Map<String, dynamic>? json;
-      UserAccount? user;
+      if (!(await InternetConnectionCheckerPlus().hasConnection)) {
+        return errorSnackBar(title: "Authentication Failed", error: "No internet connection");
+      }
       try {
-        json = Map<String, dynamic>.from(jsonDecode(response.body) as Map);
-        user = UserAccount.fromMap(json);
+        Loading.show(context: context, dismissable: false);
+        http.Response response = await (isSignIn
+            ? signIn(
+                contact: emailTextController.text,
+                password: passwordTextController.text,
+              )
+            : signUp(
+                email: emailTextController.text,
+                password: passwordTextController.text,
+                username: usenameTextController.text,
+                phone: phoneTextController.text,
+              ));
+        Map<String, dynamic>? json;
+        UserAccount? user;
+        try {
+          json = Map<String, dynamic>.from(jsonDecode(response.body) as Map);
+          user = UserAccount.fromMap(json);
+        } catch (_) {
+          log(_.toString());
+        }
+
+        Navigator.of(context).pop();
+        if (response.statusCode != 200) {
+          return errorSnackBar(
+              title: "Authentication Failed", error: json != null ? json["msg"] ?? "Something went wrong" : "Unable to parse response");
+        }
+
+        if (user != null) {
+          Provider.of<UserProvider>(context, listen: false).setUser(user);
+          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        } else {
+          return errorSnackBar(title: "Authentication Failed", error: "Unable to parse response");
+        }
       } catch (_) {
-        log(_.toString());
-      }
-
-      Navigator.of(context).pop();
-      if (response.statusCode != 200) {
-        return errorSnackBar(context: context, error: json != null ? json["msg"] ?? "Something went wrong" : "Unable to parse response");
-      }
-
-      if (user != null) {
-        Provider.of<UserProvider>(context, listen: false).setUser(user);
-        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-      } else {
-        return errorSnackBar(context: context, error: "Unable to parse response");
+        Navigator.of(context).pop();
+        return errorSnackBar(title: "Authentication Failed", error: "Something went wrong");
       }
     }
   }

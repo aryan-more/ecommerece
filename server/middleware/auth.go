@@ -14,7 +14,7 @@ func TokenMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 
 		var token models.Token
-		err := c.Bind(token)
+		err := c.Bind(&token)
 		if err != nil || token.TOKEN == "" {
 			return c.JSON(http.StatusBadRequest, response.ErrorResponse{Msg: "Invalid body"})
 		}
@@ -24,7 +24,7 @@ func TokenMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, response.ErrorResponse{Msg: err.Error()})
 		}
 
-		c.QueryParams().Add("id", id)
+		c.QueryParams().Set("id", id)
 
 		return next(c)
 	}

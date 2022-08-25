@@ -2,6 +2,7 @@ package routes_logic
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -14,7 +15,8 @@ func UpdatedUserInfo(c echo.Context) error {
 	ctx, cancel := context.WithTimeout(c.Request().Context(), time.Second*10)
 	defer cancel()
 
-	id := c.Param("id")
+	id := c.QueryParam("id")
+	fmt.Println(id)
 
 	result, err := db.DB.QueryContext(ctx, "SELECT name, email, phone FROM users WHERE id=$1", id)
 
@@ -32,6 +34,7 @@ func UpdatedUserInfo(c echo.Context) error {
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, response.ErrorResponse{Msg: err.Error()})
 		}
+		user.CART = make([]int, 0)
 
 		return c.JSON(http.StatusOK, user)
 

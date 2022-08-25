@@ -6,13 +6,12 @@ import 'package:ecommerece/utils/url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// Hashing password even if they hashed again at server , to avoid man in middle attack
+// Hashing password even if they are hashed again at server , to avoid man in middle attack
 String _hashPassword(String password) {
   return sha256.convert(password.codeUnits).toString();
 }
 
 Future<http.Response> signUp({
-  required BuildContext context,
   required String email,
   required String password,
   required String username,
@@ -34,7 +33,6 @@ Future<http.Response> signUp({
 }
 
 Future<http.Response> signIn({
-  required BuildContext context,
   required String contact,
   required String password,
 }) async {

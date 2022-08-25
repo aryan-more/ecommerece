@@ -1,5 +1,4 @@
-import 'package:ecommerece/mixin/account/login.dart';
-import 'package:ecommerece/utils/theme.dart';
+import 'package:ecommerece/screen/auth/mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -27,7 +26,6 @@ class _LogInScreenState extends State<LogInScreen> with LogInScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    AppTheme theme = Theme.of(context).theme;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -111,7 +109,6 @@ class _LogInScreenState extends State<LogInScreen> with LogInScreenMixin {
                               ),
                               icon: Icon(
                                 hidePassword ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
-                                color: theme.action,
                               ),
                             ),
                           ),
@@ -134,7 +131,6 @@ class _LogInScreenState extends State<LogInScreen> with LogInScreenMixin {
                                 ),
                                 icon: Icon(
                                   hideConfirmPassword ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
-                                  color: theme.action,
                                 ),
                               ),
                             ),
