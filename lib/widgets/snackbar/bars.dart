@@ -19,10 +19,10 @@ void errorSnackBar({required String title, required String error}) {
   );
 }
 
-void successSnackBar({required String title, required String error}) {
+void successSnackBar({required String title, required String subtitle}) {
   Get.snackbar(
     title,
-    error,
+    subtitle,
     snackPosition: SnackPosition.BOTTOM,
     snackStyle: SnackStyle.FLOATING,
     backgroundColor: Colors.green.withAlpha(100),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ecommerece/models/product.dart';
 import 'package:ecommerece/utils/url.dart';
+import 'package:ecommerece/widgets/snackbar/bars.dart';
 import 'package:http/http.dart' as http;
 
 mixin HomeScreenMixin {
@@ -13,6 +14,7 @@ mixin HomeScreenMixin {
       String api = query != null ? "product?search=$query" : "products";
       http.Response response = await http.get(Uri.parse("$domain/$api"));
       if (response.statusCode != 200) {
+        errorSnackBar(title: "Error", error: "Unable to fetch products");
         return;
       }
       List<Product> products = [];

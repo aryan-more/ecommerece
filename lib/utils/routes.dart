@@ -6,6 +6,7 @@ import 'package:ecommerece/screen/loading/loading.dart';
 import 'package:ecommerece/screen/product/product_detail.dart';
 import 'package:flutter/material.dart';
 
+// TODO Replace with GetX
 Route<dynamic> genrate(RouteSettings routeSettings) {
   switch (routeSettings.name) {
     case LoadingScreen.routeName:

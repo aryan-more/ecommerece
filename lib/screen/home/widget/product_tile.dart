@@ -1,7 +1,7 @@
 import 'package:ecommerece/models/product.dart';
 import 'package:ecommerece/screen/product/product_detail.dart';
 import 'package:ecommerece/utils/theme.dart';
-import 'package:ecommerece/widgets/snackbar/bars.dart';
+import 'package:ecommerece/widgets/bottom_sheet/add_to_cart.dart';
 import 'package:flutter/material.dart';
 
 class ProductTile extends StatelessWidget {
@@ -87,7 +87,9 @@ class ProductDetails extends StatelessWidget {
               ),
             ),
             TextButton.icon(
-              onPressed: workInProgress,
+              onPressed: () => AddToCartBottomSheet.show(product),
+
+              // cartUpdate(product: product, token: Provider.of<UserProvider>(context, listen: false).user!.token),
               icon: const Icon(Icons.add_shopping_cart_outlined),
               label: const Text(
                 "Add to cart",

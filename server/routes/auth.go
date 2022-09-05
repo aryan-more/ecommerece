@@ -9,5 +9,5 @@ import (
 func AuthRouter(e *echo.Echo) {
 	e.POST("/signup", routes_logic.SignUp)
 	e.POST("/signin", routes_logic.SignIn)
-	e.POST("/info", routes_logic.UpdatedUserInfo, middleware.TokenMiddleware)
+	e.GET("/info", routes_logic.UpdatedUserInfo, middleware.TokenMiddleware)
 }

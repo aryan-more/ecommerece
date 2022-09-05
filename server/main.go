@@ -10,6 +10,7 @@ func main() {
 	e := echo.New()
 	routes.AuthRouter(e)
 	routes.ProductRouter(e)
+	routes.CartRouter(e)
 	e.Static("/img", "img")
 	e.Logger.Fatal(e.Start(":3000"))
 

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecommerece/screen/home/body/failed.dart';
 import 'package:ecommerece/screen/home/body/products.dart';
 import 'package:ecommerece/screen/home/widget/search_bar.dart';
@@ -8,6 +7,7 @@ import 'package:ecommerece/utils/theme.dart';
 import 'package:ecommerece/widgets/snackbar/bars.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, this.query}) : super(key: key);
@@ -17,10 +17,11 @@ class HomeScreen extends StatefulWidget {
   //
   static void navigate({required BuildContext context, String? query, bool replace = false}) {
     if (replace) {
-      Navigator.of(context).pushReplacementNamed(routeName, arguments: query);
+      Get.offNamed(routeName, arguments: query);
+
       return;
     }
-    Navigator.of(context).pushNamed(routeName, arguments: query);
+    Get.toNamed(routeName, arguments: query, preventDuplicates: false);
   }
 
   @override

@@ -3,13 +3,11 @@ import 'dart:developer';
 
 import 'package:crypto/crypto.dart';
 import 'package:ecommerece/utils/url.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 // Hashing password even if they are hashed again at server , to avoid man in middle attack
-String _hashPassword(String password) {
-  return sha256.convert(password.codeUnits).toString();
-}
+// Hashing twice
+String _hashPassword(String password) => sha256.convert(sha512.convert(password.codeUnits).bytes).toString();
 
 Future<http.Response> signUp({
   required String email,

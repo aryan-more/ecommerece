@@ -6,13 +6,11 @@ class UserAccount {
   String email;
   String phoneNumber;
   final String token;
-  List cart;
 
   UserAccount({
     required this.token,
     required this.name,
     required this.email,
-    required this.cart,
     required this.phoneNumber,
   });
 
@@ -22,7 +20,6 @@ class UserAccount {
       token: map['token'] as String,
       email: map['email'] as String,
       phoneNumber: map['phone'] as String,
-      cart: map['cart'] as List,
     );
   }
 
@@ -33,7 +30,6 @@ class UserAccount {
       'email': email,
       'phone': phoneNumber,
       'token': token,
-      'cart': cart,
     };
   }
 
@@ -43,7 +39,6 @@ class UserAccount {
     name = updatedUserAccount.name;
     email = updatedUserAccount.email;
     phoneNumber = updatedUserAccount.phone;
-    cart = updatedUserAccount.cart;
   }
 }
 
@@ -51,12 +46,10 @@ class UpdatedUserAccount {
   final String name;
   final String email;
   final String phone;
-  final List cart;
   UpdatedUserAccount({
     required this.name,
     required this.email,
     required this.phone,
-    required this.cart,
   });
 
   Map<String, dynamic> toMap() {
@@ -64,7 +57,6 @@ class UpdatedUserAccount {
       'name': name,
       'email': email,
       'phone': phone,
-      'cart': cart,
     };
   }
 
@@ -73,7 +65,6 @@ class UpdatedUserAccount {
       name: map['name'] as String,
       email: map['email'] as String,
       phone: map['phone'] as String,
-      cart: List.from(map['cart'] as List),
     );
   }
 

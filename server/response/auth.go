@@ -15,5 +15,5 @@ func ClientCredential(user models.User) (echo.Map, error) {
 	if err != nil {
 		return nil, err
 	}
-	return echo.Map{"token": token, "email": user.EMAIL, "phone": user.PHONE, "name": user.NAME, "cart": []int{}}, nil
+	return echo.Map{"token": token, "email": user.EMAIL, "phone": user.PHONE, "name": user.NAME}, nil
 }
